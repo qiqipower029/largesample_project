@@ -1,0 +1,21 @@
+---
+title: "Large Sample Theory Project"
+author: "Jieqi Tu"
+date: "11/5/2020"
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+## n = 20
+
+#### Step 1. Draw samples from Gamma distribution.
+```{r draw samples n = 20}
+
+```
+
