@@ -104,7 +104,7 @@ s2_3 = sum(s3^2)/1000; s2_3
 ```
 
 #### Compare 3 scenarios
-```{r}
+```{r compare three}
 
 ```
 
