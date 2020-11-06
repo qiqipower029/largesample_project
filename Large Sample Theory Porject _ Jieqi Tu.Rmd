@@ -10,12 +10,101 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
+library(ggpubr)
 ```
 
-## n = 20
+#### n = 10
+```{r draw samples n = 10}
+set.seed(1)
+k = 1.67
+n = 10
+theta = 49.98
+s = sd(sample10); s
+x_bar = numeric(1000)
+s = numeric(1000)
+for (i in 1:1000) {
+  sample = rgamma(n, shape = k, scale = theta)
+  x_bar[i] = mean(sample)
+  s[i] = sd(sample)
+}
+mean(x_bar)
+sd(x_bar)
+z = (x_bar - mean(x_bar))/(sd(x_bar)/sqrt(n))
+df = data.frame(z = z)
+```
 
-#### Step 1. Draw samples from Gamma distribution.
+```{r density function n = 10}
+density1 = ggplot(df, aes(x = z)) + geom_density() + theme_bw()
+density1
+```
+
+```{r compute s1 and s2 n = 10}
+s1_1 = (sd(x_bar))^2 * 10; s1_1
+s2_1 = sum(s^2)/1000; s2_1
+```
+
+#### n = 20
 ```{r draw samples n = 20}
+
+k = 1.67
+theta = 49.98
+n = 20
+x_bar2 = numeric(1000)
+s2 = numeric(1000)
+for (i in 1:1000) {
+  sample = rgamma(n, shape = k, scale = theta)
+  x_bar2[i] = mean(sample)
+  s2[i] = sd(sample)
+}
+mean(x_bar2)
+sd(x_bar2)
+z2 = (x_bar2 - mean(x_bar2))/(sd(x_bar2)/sqrt(n))
+df2 = data.frame(z = z2)
+```
+
+```{r density function n=20}
+density2 = ggplot(df2, aes(x = z)) + geom_density() + theme_bw()
+density2
+```
+
+```{r compute s1 s2 n=20}
+s1_2 = (sd(x_bar2))^2 * 20; s1_2
+s2_2 = sum(s2^2)/1000; s2_2
+```
+
+#### n = 30
+```{r draw samples n = 30}
+k = 1.67
+theta = 49.98
+n = 30
+x_bar3 = numeric(1000)
+s3 = numeric(1000)
+for (i in 1:1000) {
+  sample = rgamma(n, shape = k, scale = theta)
+  x_bar3[i] = mean(sample)
+  s3[i] = sd(sample)
+}
+mean(x_bar3)
+sd(x_bar3)
+z3 = (x_bar3 - mean(x_bar3))/(sd(x_bar3)/sqrt(n))
+df3 = data.frame(z = z3)
+```
+
+```{r density function n=30}
+density3 = ggplot(df3, aes(x = z)) + geom_density() + theme_bw()
+density3
+ggarrange(density1, density2, density3,
+          labels = c(1, 2, 3),
+          ncol = 3, nrow = 1)
+```
+
+```{r compute s1 s2 n=30}
+s1_3 = (sd(x_bar3))^2 * 30; s1_3
+s2_3 = sum(s3^2)/1000; s2_3
+```
+
+#### Compare 3 scenarios
+```{r}
 
 ```
 
