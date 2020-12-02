@@ -50,8 +50,9 @@ df = data.frame(z = z)
 density1 = ggplot(df, aes(x = z)) + geom_density() + theme_bw()
 density1
 ```
-
+Here we plotted the density of $z$. We can see that the distribution is a little bit right skewed and goes down more rapidly after the peak. The peak is approximately a slightly left to the origin.
 ```{r compute s1 and s2 n10, echo=TRUE}
+# Calculate s1 and s2 when n = 10
 s1_1 = (sd(x_bar))^2 * n; s1_1
 s2_1 = sum(s^2)/1000; s2_1
 ```
