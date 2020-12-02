@@ -17,15 +17,18 @@ The algorithm of this project:
 
 * Draw n (n = 10, 20 and 30) samples from $Gamma(k=1.67, \theta=49.98)$.
 * Compute $\bar x$ and $s$.
-* Repeat 1000 times. Then we will get $(\bar x_1, s_1)，(\bar x_2, s_2)，…,(\bar x_{1000}, s_{1000})$.
+* Repeat 1000 times. Then we will get $(\bar {x_1}, s_1),(\bar {x_2}, s_2),\cdots,(\bar {x_{1000}}, s_{1000})$.
 * Compute $\bar{\bar{x}}=\frac{\sum\bar{x_i}}{1000}$, $\bar{s}=[\frac{\sum{(\bar{x_i}-\bar{\bar{x}}})^2}{1000}]^{\frac{1}{2}}$
-* Compute $z=\frac{\bar{x_i}-\bar{\bar{x}}}{\bar s/\sqrt{n}}$.
-* Draw density function based on $z_i, i=1, 2, …,1000$.
+* Compute $z=\frac{\bar{x_i}-\bar{\bar{x}}}{\bar {s}/ \sqrt{n}}$.
+* Draw density function based on $z_i, i=1, 2, \cdots,1000$.
 * Compute $\bar{\bar{s_1^2}}=\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000}$ and $\bar{\bar{s_2^2}}=\frac{\sum{s_i^2}}{1000}$
 
 In this project, we want to compare $\bar{\bar{s_1^2}}$, $\bar{\bar{s_2^2}}$ and $k\theta^2$
-#### n = 10
-```{r draw samples n10}
+
+## n = 10
+
+Then let's firstly try n = 10.
+```{r draw samples n10, echo=TRUE}
 set.seed(24)
 k = 1.67
 n = 10
@@ -43,18 +46,18 @@ z = (x_bar - mean(x_bar))/(sd(x_bar)/sqrt(n))
 df = data.frame(z = z)
 ```
 
-```{r density function n10}
+```{r density function n10, echo=TRUE}
 density1 = ggplot(df, aes(x = z)) + geom_density() + theme_bw()
 density1
 ```
 
-```{r compute s1 and s2 n10}
+```{r compute s1 and s2 n10, echo=TRUE}
 s1_1 = (sd(x_bar))^2 * n; s1_1
 s2_1 = sum(s^2)/1000; s2_1
 ```
 
-#### n = 20
-```{r draw samples n20}
+## n = 20
+```{r draw samples n20, echo=TRUE}
 set.seed(24)
 n = 20
 x_bar2 = numeric(1000)
@@ -70,18 +73,18 @@ z2 = (x_bar2 - mean(x_bar2))/(sd(x_bar2)/sqrt(n))
 df2 = data.frame(z = z2)
 ```
 
-```{r density function n20}
+```{r density function n20, echo=TRUE}
 density2 = ggplot(df2, aes(x = z)) + geom_density() + theme_bw()
 density2
 ```
 
-```{r compute s1 s2 n20}
+```{r compute s1 s2 n20, echo=TRUE}
 s1_2 = (sd(x_bar2))^2 * n; s1_2
 s2_2 = sum(s2^2)/1000; s2_2
 ```
 
-#### n = 30
-```{r draw samples n30}
+## n = 30
+```{r draw samples n30, echo=TRUE}
 set.seed(24)
 n = 30
 x_bar3 = numeric(1000)
@@ -97,7 +100,7 @@ z3 = (x_bar3 - mean(x_bar3))/(sd(x_bar3)/sqrt(n))
 df3 = data.frame(z = z3)
 ```
 
-```{r density function n30}
+```{r density function n30, echo=TRUE}
 density3 = ggplot(df3, aes(x = z)) + geom_density() + theme_bw()
 density3
 ggarrange(density1, density2, density3,
@@ -106,13 +109,13 @@ ggarrange(density1, density2, density3,
 ```
 
 From the plot panel, we could see that, although they are all bell-shaped and symmetric distributed, the peak density became lower and lower as the sample size increases.
-```{r compute s1 s2 n30}
+```{r compute s1 s2 n30, echo=TRUE}
 s1_3 = (sd(x_bar3))^2 * n; s1_3
 s2_3 = sum(s3^2)/1000; s2_3
 ```
 
 #### Compare 3 scenarios
-```{r compare three}
+```{r compare three, echo=TRUE}
 s1 = c(s1_1, s1_2, s1_3)
 s2 = c(s2_1, s2_2, s2_3)
 compare = data.frame(s1, s2)
