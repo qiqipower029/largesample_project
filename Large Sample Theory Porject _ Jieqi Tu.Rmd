@@ -29,7 +29,7 @@ In this project, we want to compare $\bar{\bar{s_1^2}}$, $\bar{\bar{s_2^2}}$ and
 
 Then let's firstly try n = 10.
 ```{r draw samples n10, echo=TRUE}
-set.seed(24)
+set.seed(26)
 k = 1.67
 n = 10
 theta = 49.98
@@ -63,7 +63,7 @@ The values for $\bar{\bar{s_1^2}}$ and $\bar{\bar{s_2^2}}$ are calculated when n
 
 Then let us increase the sample size. This time, n = 20.
 ```{r draw samples n20, echo=TRUE}
-set.seed(24)
+set.seed(26)
 n = 20
 x_bar2 = numeric(1000)
 s2 = numeric(1000)
@@ -94,7 +94,7 @@ Here we could see that, $\bar{\bar{s_2^2}}$ is still more close to the theoretic
 ## Scenario: n = 30
 Then we want to increase the sample size from 20 to 30, and see what will happen.
 ```{r draw samples n30, echo=TRUE}
-set.seed(24)
+set.seed(26)
 n = 30
 x_bar3 = numeric(1000)
 s3 = numeric(1000)
@@ -152,9 +152,13 @@ Therefore, we want to show that $\bar{\bar{s_1^2}}$ is a biased estimator of the
 Since each element in the sample follows $Gamma(k,\theta)$, we have large enough repeated times (1000), according to Lindeberg-Levy CLT, we have:
 $$\sqrt{n}(\bar{X_i}-k\theta) \xrightarrow{\text{d}}N(0,k\theta^2)$$
 Since  $\bar{\bar{s_1^2}}=\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000}\times n$, let us consider $\bar x_i$ as a random variable with $E(\bar X_i)=k\theta, Var(\bar X_i)=k\theta^2/n$, and $n=10, 20, 30$. Hence we have $Var(\bar X_i)= k\theta^2/n$.
-However, in order to estimate the variance parameter, the unbiased estimator would be $\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000-1}$ (This result we used here was proved in Large Sample Theory Homework 2).
-Hence the unbiased estimator for the population variance $k\theta$ would be 
+However, in order to estimate the variance parameter, the unbiased estimator would be $\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000-1}$ (This result we used here was proved in Large Sample Theory Homework 2). It can be shown that $E(\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000})=(1-\frac{1}{1000})k\theta^2/n$. 
+Hence the unbiased estimator for the population variance $k\theta^2$ would be $\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000-1} \times n$, and $n=10, 20, 30$.
+Therefore, the estimates would be 1/1000 smaller than the theoretical value of population variance $k\theta^2$.
 
 ### Proof 2: $\bar{\bar{s_2^2}}$ is an unbiased estimator of the population variance
 Since $\bar{\bar{s_2^2}}=\frac{\sum{s_i^2}}{1000}$, let us consider $s_i$, $i=1, 2,\cdots,1000$ as a random variable.
-In Large Sample Theory Homework 2, we have shown that $s_i^2\rightarrow\sigma^2$.
+In Large Sample Theory Homework 2, we have shown that $s_i^2\rightarrow\sigma^2$. So for each $s_i$, we have $E(s_i)=\sigma^2=k\theta^2$.
+Then, apply the Weak Law of Large Numbers here, we can have:
+$\frac{\sum{s_i^2}}{N} \xrightarrow{\text p}E(s^2)=k\theta^2$.
+Therefore, $\bar{\bar{s_2^2}}$ is an unbiased estimator for $k\theta^2$.
