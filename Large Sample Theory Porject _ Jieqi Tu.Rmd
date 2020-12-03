@@ -117,11 +117,11 @@ density3
 The density of $z$ when sample size is 30 looks more symmetric, and almost not skewed. the peak is arrived when $z\approx 0$.
 ```{r compare distribution, echo=TRUE}
 ggarrange(density1, density2, density3,
-          labels = c(1, 2, 3),
+          labels = c("n=10", "n=20", "n=30"),
           ncol = 3, nrow = 1)
 ```
 
-From the plot panel, we could see that, although they are all bell-shaped and symmetric distributed, the peak density became lower and lower as the sample size increases.
+From the plot panel, we could see that, although they are all bell-shaped and symmetric distributed, the peak density became lower and lower as the sample size increases. Meanwhile, the shape of the distribution becomes more symmetric with one peak at $z=0$ and looks more normally distributed.
 ```{r compute s1 s2 n30, echo=TRUE}
 s1_3 = sum((x_bar3-mean(x_bar3))^2)/1000 * n; s1_3
 s2_3 = sum(s3^2)/1000; s2_3
@@ -135,8 +135,8 @@ s2 = c(s2_1, s2_2, s2_3)
 compare = data.frame(s1, s2)
 theoretical = k*theta^2
 theoretical
-compare$'s1-true' = s1 - theoretical
-compare$'s2-true' = s2 - theoretical
+compare$'s1-theoretical' = s1 - theoretical
+compare$'s2-theoretical' = s2 - theoretical
 compare %>% knitr::kable()
 ```
 
@@ -145,6 +145,7 @@ From the result, we have several findings:
 
 * As the sample size increases, $\bar{\bar{s_1^2}}$ and $\bar{\bar{s_2^2}}$ are getting more closer to the theoretical value.
 * No matter what sample size we choose, $\bar{\bar{s_2^2}}$ is always closer to the theoretical value than $\bar{\bar{s_1^2}}$. 
+* We still need to take it into consideration that $n=10,20,30$ are still not large sample size, so the sample mean and sample variance might not accurately relect the population parameters. Therefore, even though we repeatedly draw samples 1000 times, we still have considerable differences between our estimates and the theoretical value.
 
 Therefore, we want to show that $\bar{\bar{s_1^2}}$ is a biased estimator of the population variance while $\bar{\bar{s_2^2}}$ is an unbiased estimator of the population variance.
 
@@ -160,5 +161,5 @@ Therefore, the estimates would be 1/1000 smaller than the theoretical value of p
 Since $\bar{\bar{s_2^2}}=\frac{\sum{s_i^2}}{1000}$, let us consider $s_i$, $i=1, 2,\cdots,1000$ as a random variable.
 In Large Sample Theory Homework 2, we have shown that $s_i^2\rightarrow\sigma^2$. So for each $s_i$, we have $E(s_i)=\sigma^2=k\theta^2$.
 Then, apply the Weak Law of Large Numbers here, we can have:
-$\frac{\sum{s_i^2}}{N} \xrightarrow{\text p}E(s^2)=k\theta^2$.
-Therefore, $\bar{\bar{s_2^2}}$ is an unbiased estimator for $k\theta^2$.
+$\frac{\sum{s_i^2}}{N} \xrightarrow{\text p}E(s^2)=k\theta^2$ as $N\rightarrow \infty$.
+Therefore, $\bar{\bar{s_2^2}}$ is an unbiased estimator for $k\theta^2$ if we have a large N.
