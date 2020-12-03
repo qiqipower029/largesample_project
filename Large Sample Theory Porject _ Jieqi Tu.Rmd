@@ -21,11 +21,11 @@ The algorithm of this project:
 * Compute $\bar{\bar{x}}=\frac{\sum\bar{x_i}}{1000}$, $\bar{s}=[\frac{\sum{(\bar{x_i}-\bar{\bar{x}}})^2}{1000}]^{\frac{1}{2}}$
 * Compute $z=\frac{\bar{x_i}-\bar{\bar{x}}}{\bar {s}/ \sqrt{n}}$.
 * Draw density function based on $z_i, i=1, 2, \cdots,1000$.
-* Compute $\bar{\bar{s_1^2}}=\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000}$ and $\bar{\bar{s_2^2}}=\frac{\sum{s_i^2}}{1000}$
+* Compute $\bar{\bar{s_1^2}}=\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000}\times n$ and $\bar{\bar{s_2^2}}=\frac{\sum{s_i^2}}{1000}$
 
-In this project, we want to compare $\bar{\bar{s_1^2}}$, $\bar{\bar{s_2^2}}$ and $k\theta^2$
+In this project, we want to compare $\bar{\bar{s_1^2}}$, $\bar{\bar{s_2^2}}$ and $k\theta^2$.
 
-## n = 10
+## Scenario: n = 10
 
 Then let's firstly try n = 10.
 ```{r draw samples n10, echo=TRUE}
@@ -45,7 +45,7 @@ sd(x_bar)
 z = (x_bar - mean(x_bar))/(sd(x_bar)/sqrt(n))
 df = data.frame(z = z)
 ```
-
+When the sample size n = 10, of 1000 samples, the mean of sample mean is `r mean(x_bar)`, and the standard deviation of the sample mean is `r sd(x_bar)`.
 ```{r density function n10, echo=TRUE}
 density1 = ggplot(df, aes(x = z)) + geom_density() + theme_bw()
 density1
@@ -53,11 +53,15 @@ density1
 Here we plotted the density of $z$. We can see that the distribution is a little bit right skewed and goes down more rapidly after the peak. The peak is approximately a slightly left to the origin.
 ```{r compute s1 and s2 n10, echo=TRUE}
 # Calculate s1 and s2 when n = 10
-s1_1 = (sd(x_bar))^2 * n; s1_1
+s1_1 = sum((x_bar-mean(x_bar))^2)/1000 * n; s1_1
 s2_1 = sum(s^2)/1000; s2_1
 ```
+The values for $\bar{\bar{s_1^2}}$ and $\bar{\bar{s_2^2}}$ are calculated when n = 10. Here, the  $\bar{\bar{s_2^2}}$ is slightly larger than  $\bar{\bar{s_1^2}}$, and is more close to the theoretical value `r k*theta^2`.
 
-## n = 20
+
+## Scenario: n = 20
+
+Then let us increase the sample size. This time, n = 20.
 ```{r draw samples n20, echo=TRUE}
 set.seed(24)
 n = 20
@@ -73,18 +77,22 @@ sd(x_bar2)
 z2 = (x_bar2 - mean(x_bar2))/(sd(x_bar2)/sqrt(n))
 df2 = data.frame(z = z2)
 ```
+When the sample size n = 20, of 1000 samples, the mean of sample mean is `r mean(x_bar2)`, and the standard deviation of the sample mean is `r sd(x_bar2)`. We could notice that, although the mean remains the same as it of n = 10, the standard deviation becomes lower than before.
 
 ```{r density function n20, echo=TRUE}
 density2 = ggplot(df2, aes(x = z)) + geom_density() + theme_bw()
 density2
 ```
-
+This is the distribution of $z$ when sample size n = 20. Here we could see that the distribution becomes more symmetric than that of n = 10. This time, the peak also arrives left to the origin. The distribution is still slightly right skewed.
 ```{r compute s1 s2 n20, echo=TRUE}
-s1_2 = (sd(x_bar2))^2 * n; s1_2
+s1_2 = sum((x_bar2-mean(x_bar2))^2)/1000 * n; s1_2
 s2_2 = sum(s2^2)/1000; s2_2
 ```
+Here we could see that, $\bar{\bar{s_2^2}}$ is still more close to the theoretical value, compared to $\bar{\bar{s_1^2}}$.
 
-## n = 30
+
+## Scenario: n = 30
+Then we want to increase the sample size from 20 to 30, and see what will happen.
 ```{r draw samples n30, echo=TRUE}
 set.seed(24)
 n = 30
@@ -95,11 +103,12 @@ for (i in 1:1000) {
   x_bar3[i] = mean(sample)
   s3[i] = sd(sample)
 }
-mean(x_bar3)
+mean(x_bar3); 
 sd(x_bar3)
 z3 = (x_bar3 - mean(x_bar3))/(sd(x_bar3)/sqrt(n))
 df3 = data.frame(z = z3)
 ```
+When the sample size n = 30, of 1000 samples, the mean of sample mean is `r mean(x_bar3)`, and the standard deviation of the sample mean is `r sd(x_bar3)`. We could see that, although the mean remains close to that of n = 10 and 20, the standard deviation becomes more lower than n = 10 and 20.
 
 ```{r density function n30, echo=TRUE}
 density3 = ggplot(df3, aes(x = z)) + geom_density() + theme_bw()
@@ -111,19 +120,27 @@ ggarrange(density1, density2, density3,
 
 From the plot panel, we could see that, although they are all bell-shaped and symmetric distributed, the peak density became lower and lower as the sample size increases.
 ```{r compute s1 s2 n30, echo=TRUE}
-s1_3 = (sd(x_bar3))^2 * n; s1_3
+s1_3 = sum((x_bar3-mean(x_bar3))^2)/1000 * n; s1_3
 s2_3 = sum(s3^2)/1000; s2_3
 ```
+Here we could see that, $\bar{\bar{s_2^2}}$ is still more close to the theoretical value, compared to $\bar{\bar{s_1^2}}$.
 
-#### Compare 3 scenarios
+## Compare 3 scenarios
 ```{r compare three, echo=TRUE}
 s1 = c(s1_1, s1_2, s1_3)
 s2 = c(s2_1, s2_2, s2_3)
 compare = data.frame(s1, s2)
-true = k*theta^2
-true
-compare$'s1-true' = s1 - true
-compare$'s2-true' = s2 - true
-compare
+theoretical = k*theta^2
+theoretical
+compare$'s1-true' = s1 - theoretical
+compare$'s2-true' = s2 - theoretical
+compare %>% knitr::kable()
 ```
 
+We want to compare the $\bar{\bar{s_1^2}}$, $\bar{\bar{s_2^2}}$ and the theoretical value (true) $k\theta^2=4171.661$.
+From the result, we have several findings:
+
+* As the sample size increases, $\bar{\bar{s_1^2}}$ and $\bar{\bar{s_2^2}}$ are getting more closer to the theoretical value.
+* No matter what sample size we choose, $\bar{\bar{s_2^2}}$ is always closer to the theoretical value than $\bar{\bar{s_1^2}}$. 
+
+Therefore, we want to show that $\bar{\bar{s_1^2}}$ is a biased estimator of the population variance while $\bar{\bar{s_2^2}}$ is an unbiased estimator of the population variance.
