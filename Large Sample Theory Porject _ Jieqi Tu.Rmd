@@ -149,9 +149,11 @@ From the result, we have several findings:
 Therefore, we want to show that $\bar{\bar{s_1^2}}$ is a biased estimator of the population variance while $\bar{\bar{s_2^2}}$ is an unbiased estimator of the population variance.
 
 ### Proof 1: $\bar{\bar{s_1^2}}$ is a biased estimator of the population variance
-Since each element in the sample follows $Gamma(k,\theta)$, according to Lindeberg-Levy CLT, we have:
+Since each element in the sample follows $Gamma(k,\theta)$, we have large enough repeated times (1000), according to Lindeberg-Levy CLT, we have:
 $$\sqrt{n}(\bar{X_i}-k\theta) \xrightarrow{\text{d}}N(0,k\theta^2)$$
-Since  $\bar{\bar{s_1^2}}=\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000}\times n$
+Since  $\bar{\bar{s_1^2}}=\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000}\times n$, let us consider $\bar x_i$ as a random variable with $E(\bar X_i)=k\theta, Var(\bar X_i)=k\theta^2/n$, and $n=10, 20, 30$. Hence we have $Var(\bar X_i)= k\theta^2/n$.
+However, in order to estimate the variance parameter, the unbiased estimator would be $\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000-1}$ (This result we used here was proved in Large Sample Theory Homework 2).
+Hence the unbiased estimator for the population variance $k\theta$ would be 
 
 ### Proof 2: $\bar{\bar{s_2^2}}$ is an unbiased estimator of the population variance
 Since $\bar{\bar{s_2^2}}=\frac{\sum{s_i^2}}{1000}$, let us consider $s_i$, $i=1, 2,\cdots,1000$ as a random variable.
