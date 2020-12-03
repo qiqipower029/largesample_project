@@ -151,7 +151,7 @@ Therefore, we want to show that $\bar{\bar{s_1^2}}$ is a biased estimator of the
 ### Proof 1: $\bar{\bar{s_1^2}}$ is a biased estimator of the population variance
 Since each element in the sample follows $Gamma(k,\theta)$, according to Lindeberg-Levy CLT, we have:
 $$\sqrt{n}(\bar{X_i}-k\theta) \xrightarrow{\text{d}}N(0,k\theta^2)$$
-
+Since  $\bar{\bar{s_1^2}}=\frac{\sum{(\bar{x_i}-\bar{\bar{x}})^2}}{1000}\times n$
 
 ### Proof 2: $\bar{\bar{s_2^2}}$ is an unbiased estimator of the population variance
 Since $\bar{\bar{s_2^2}}=\frac{\sum{s_i^2}}{1000}$, let us consider $s_i$, $i=1, 2,\cdots,1000$ as a random variable.
