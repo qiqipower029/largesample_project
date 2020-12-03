@@ -113,6 +113,9 @@ When the sample size n = 30, of 1000 samples, the mean of sample mean is `r mean
 ```{r density function n30, echo=TRUE}
 density3 = ggplot(df3, aes(x = z)) + geom_density() + theme_bw()
 density3
+```
+The density of $z$ when sample size is 30 looks more symmetric, and almost not skewed. the peak is arrived when $z\approx 0$.
+```{r compare distribution, echo=TRUE}
 ggarrange(density1, density2, density3,
           labels = c(1, 2, 3),
           ncol = 3, nrow = 1)
@@ -144,3 +147,5 @@ From the result, we have several findings:
 * No matter what sample size we choose, $\bar{\bar{s_2^2}}$ is always closer to the theoretical value than $\bar{\bar{s_1^2}}$. 
 
 Therefore, we want to show that $\bar{\bar{s_1^2}}$ is a biased estimator of the population variance while $\bar{\bar{s_2^2}}$ is an unbiased estimator of the population variance.
+
+### Proof 1: $\bar{\bar{s_2^2}}$ is an unbiased estimator of the population variance
